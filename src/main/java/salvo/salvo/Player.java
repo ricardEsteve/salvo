@@ -6,11 +6,9 @@ package salvo.salvo;
 
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 
 @Entity
@@ -20,6 +18,10 @@ public class Player {
     private long id;
     private String userName;
     private String email;
+
+    @OneToMany(mappedBy = "player", fetch = FetchType.EAGER)
+    private Set<GamePlayer> gamePlayers = new HashSet<>();
+
 
     public Player() { }
 
@@ -33,10 +35,10 @@ public class Player {
     public void setUserName(String userName) {
         this.userName = userName;
     }
+
     public String getEmail() {
         return email;
     }
-
     public void setEmail(String email) {
         this.email = email;
     }
