@@ -34,8 +34,11 @@ public class Game {
         return creationDate;
     }
 
+    public Set<GamePlayer> getGamePlayers() {
+        return gamePlayers;
+    }
 
-    public void setCreationDate( Date newCreationDate) {
+    public void setCreationDate(Date newCreationDate) {
         this.creationDate = newCreationDate;
     }
 
