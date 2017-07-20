@@ -59,6 +59,8 @@ public class SalvoApplication {
             gamePlayerRepository.save(gamePlayer4);
             gamePlayerRepository.save(gamePlayer5);
             gamePlayerRepository.save(gamePlayer6);
+
+
         };
     }
 }

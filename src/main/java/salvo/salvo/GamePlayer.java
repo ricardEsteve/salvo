@@ -2,6 +2,8 @@ package salvo.salvo;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by Ricard Esteve on 17/07/2017.
@@ -22,6 +24,11 @@ public class GamePlayer {
     @JoinColumn(name = "player_id")
     @ManyToOne(fetch = FetchType.EAGER)
     private Player player;
+
+    @OneToMany(mappedBy = "gamePlayer", fetch = FetchType.EAGER)
+    private Set<Ship> ships = new HashSet<>();
+
+
 
     public GamePlayer () {
 
