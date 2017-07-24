@@ -5,7 +5,10 @@ package salvo.salvo;
         import org.springframework.boot.CommandLineRunner;
         import org.springframework.context.annotation.Bean;
 
+        import java.util.ArrayList;
+        import java.util.Arrays;
         import java.util.Date;
+        import java.util.List;
 
 @SpringBootApplication
 
@@ -16,24 +19,22 @@ public class SalvoApplication {
     }
 
     @Bean
-    public CommandLineRunner initData(PlayerRepository playerRepository, GameRepository gameRepository, GamePlayerRepository gamePlayerRepository) {
+    public CommandLineRunner initData(PlayerRepository playerRepository, GameRepository gameRepository, GamePlayerRepository gamePlayerRepository, ShipRepository shipRepository) {
         return (String... args) -> {
 
-            Player player1 = new Player("Albert", "albert@example.com");
-            Player player2 = new Player ("Anton", "Anton@example.com");
-            Player player3 = new Player ("Bruno", "Bruno@example.com");
-            Player player4 = new Player("Roc", "Roc@example.com");
-            Player player5 = new Player("Nuria", "Nuria@example.com");
-            Player player6 = new Player("Ricard", "Ricard@example.com");
+            Player Jbauer = new Player("JBauer", "JBauer@example.com");
+            Player Cobrien = new Player ("Cobrien", "Cobrien@example.com");
+            Player Kbauer = new Player ("Kbauer", "Kbauer@example.com");
+            Player Talmeida = new Player("Talmeida", "Talmeida@example.com");
 
-            playerRepository.save(player1);
-            playerRepository.save(player2);
-            playerRepository.save(player3);
-            playerRepository.save(player4);
-            playerRepository.save(player5);
-            playerRepository.save(player6);
 
-            Date data = new Date();
+            playerRepository.save(Jbauer);
+            playerRepository.save(Cobrien);
+            playerRepository.save(Kbauer);
+            playerRepository.save(Talmeida);
+
+
+            Date date = new Date();
 
             Game gameOne = new Game();
             Game gameTwo = new Game();
@@ -45,12 +46,11 @@ public class SalvoApplication {
             gameRepository.save(gameTwo);
             gameRepository.save(gameThree);
 
-            GamePlayer gamePlayer1 = new GamePlayer(data, gameOne, player1);
-            GamePlayer gamePlayer2 = new GamePlayer(data, gameOne, player2);
-            GamePlayer gamePlayer3 = new GamePlayer(data, gameTwo, player3);
-            GamePlayer gamePlayer4 = new GamePlayer(data, gameTwo, player4);
-            GamePlayer gamePlayer5 = new GamePlayer(data, gameThree, player5);
-            GamePlayer gamePlayer6 = new GamePlayer(data, gameThree, player6);
+            GamePlayer gamePlayer1 = new GamePlayer(date, gameOne, Jbauer);
+            GamePlayer gamePlayer2 = new GamePlayer(date, gameOne, Cobrien);
+            GamePlayer gamePlayer3 = new GamePlayer(date, gameTwo, Kbauer);
+            GamePlayer gamePlayer4 = new GamePlayer(date, gameTwo, Talmeida);
+            GamePlayer gamePlayer5 = new GamePlayer(date, gameThree,Jbauer);
 
 
             gamePlayerRepository.save(gamePlayer1);
@@ -58,7 +58,23 @@ public class SalvoApplication {
             gamePlayerRepository.save(gamePlayer3);
             gamePlayerRepository.save(gamePlayer4);
             gamePlayerRepository.save(gamePlayer5);
-            gamePlayerRepository.save(gamePlayer6);
+
+
+
+            Ship ship1 = new Ship(ShipType.patrolBoat, gamePlayer1, Arrays.asList("A1", "A2"));
+            Ship ship2 = new Ship(ShipType.carrier, gamePlayer1, new ArrayList<>(Arrays.asList("C1","C2","C3","C4","C5")));
+            Ship ship3 = new Ship(ShipType.submarine, gamePlayer2, new ArrayList<>(Arrays.asList("H2","H3","H4")));
+            Ship ship4 = new Ship(ShipType.destroyer, gamePlayer2, new ArrayList<>(Arrays.asList("B2","B3","B4")));
+            Ship ship5 = new Ship(ShipType.battleship, gamePlayer3, new ArrayList<>(Arrays.asList("C9","D9","E9","F9")));
+            Ship ship6 = new Ship(ShipType.patrolBoat, gamePlayer3, new ArrayList<>(Arrays.asList("A6", "A7")));
+
+
+            shipRepository.save(ship1);
+            shipRepository.save(ship2);
+            shipRepository.save(ship3);
+            shipRepository.save(ship4);
+            shipRepository.save(ship5);
+            shipRepository.save(ship6);
 
 
         };

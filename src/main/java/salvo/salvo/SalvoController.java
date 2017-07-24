@@ -20,16 +20,18 @@ public class SalvoController {
     @Autowired
     private GameRepository gameRepository;
 
+    @Autowired
+    private GamePlayerRepository gamePlayerRepository;
+
     @RequestMapping("/games")
-    public List <Object> gameList () {
+    public List<Object> gameList() {
         List<Object> list = new ArrayList<>();
 
         List<Game> games = gameRepository.findAll();
 
 
-
-        for (int i = 0; i < games.size(); i++ ) {
-            Map <String, Object> map = new LinkedHashMap<>();
+        for (int i = 0; i < games.size(); i++) {
+            Map<String, Object> map = new LinkedHashMap<>();
             map.put("Id", games.get(i).getId());
             map.put("created", games.get(i).getCreationDate());
 
@@ -41,22 +43,49 @@ public class SalvoController {
             list.add(map);
 
         }
-      return list;
+        return list;
     }
 
-    public Map<String, Object> gamePlayerMap (GamePlayer gamePlayer){
+    public Map<String, Object> gamePlayerMap(GamePlayer gamePlayer) {
         Map<String, Object> map = new HashMap<>();
-        map.put ("id", gamePlayer.getId());
-        map.put ("player", PlayerMap(gamePlayer.getPlayer()));
+        map.put("id", gamePlayer.getId());
+        map.put("player", playerMap(gamePlayer.getPlayer()));
 
         return map;
 
     }
-    public Map<String, Object> PlayerMap (Player player) {
+
+    public Map<String, Object> playerMap(Player player) {
         Map<String, Object> map = new HashMap<>();
         map.put("id", player.getId());
         map.put("email", player.getEmail());
 
         return map;
     }
-}
+
+    @RequestMapping("/game_view/{gamePlayerId}")
+    public Map<String, Object> gamePlayerId ( @PathVariable long gamePlayerId){
+            GamePlayer gamePlayer = gamePlayerRepository.findOne(gamePlayerId);
+            Game theGame = gamePlayer.getGame();
+
+            Map<String, Object> map = new LinkedHashMap<>();
+            map.put("id", theGame.getId());
+            map.put("created", theGame.getCreationDate());
+            map.put("gameplayers", theGame.getGamePlayers().stream().map(gamePlayer1 -> eachGamePlayerMap(gamePlayer1))
+                    .collect(Collectors.toList()));
+
+            return map;
+        }
+
+
+        public Map<String, Object> eachGamePlayerMap (GamePlayer gamePlayer){
+            Map<String, Object> map = new LinkedHashMap<>();
+            map.put("id", gamePlayer.getId());
+            map.put("email", gamePlayer.getPlayer().getEmail());
+
+
+            return map;
+
+
+        }
+    }

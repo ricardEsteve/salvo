@@ -1,6 +1,7 @@
 package salvo.salvo;
 
 import javax.persistence.*;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,9 +22,18 @@ public class Ship {
     @ManyToOne(fetch = FetchType.EAGER)
     private GamePlayer gamePlayer;
 
+
     @ElementCollection
     @Column(name = "cells")
     private List<String> cells = new ArrayList<>();
+
+    public Ship() {}
+
+    public Ship(ShipType shipType, GamePlayer gamePlayer,  List<String> cells) {
+        this.type = shipType;
+        this.gamePlayer = gamePlayer;
+        this.cells = cells;
+    }
 
     public long getId() {
         return id;
@@ -33,20 +43,25 @@ public class Ship {
         return type;
     }
 
-    public ShipType setType(){
-        return type;
+    public void setType(ShipType shipType ){
+        this.type = shipType;
     }
 
     public GamePlayer getGamePlayer(){
         return gamePlayer;
     }
 
-    public  GamePlayer setGamePlayer (){
-        return gamePlayer;
+    public void setGamePlayer (GamePlayer gamePlayer){
+        this.gamePlayer = gamePlayer;
     }
 
+    public List<String> getCells (){
+        return cells;
+    }
 
-
+    public void setCells(List<String> cellList) {
+        this.cells = cellList;
+    }
 
 }
 

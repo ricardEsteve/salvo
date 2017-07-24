@@ -37,7 +37,6 @@ public class GamePlayer {
     public GamePlayer (Date joinDate, Game newGame, Player newPlayer) {
         this.joinDate = joinDate;
         this.game = newGame;
-
         this.player = newPlayer;
 
     }
@@ -69,4 +68,6 @@ public class GamePlayer {
     public long getId() {
         return id;
     }
+
+
 }

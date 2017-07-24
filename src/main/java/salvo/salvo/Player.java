@@ -50,6 +50,15 @@ public class Player {
     public long getId() {
         return id;
     }
+    public void setGamePlayers (Set<GamePlayer> gamePlayers){
+    this.gamePlayers = gamePlayers;
+    }
+
+    public Set<GamePlayer> getGamePlayers(){
+        return gamePlayers;
+    }
 }
+
+
 
 
