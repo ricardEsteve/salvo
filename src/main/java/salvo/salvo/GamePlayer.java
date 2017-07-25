@@ -69,5 +69,7 @@ public class GamePlayer {
         return id;
     }
 
-
+    public Set<Ship> getShips() {
+        return this.ships;
+    }
 }

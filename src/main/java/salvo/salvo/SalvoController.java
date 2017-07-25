@@ -1,11 +1,15 @@
 package salvo.salvo;
 
+import org.omg.CORBA.MARSHAL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.method.annotation.ModelAttributeMethodProcessor;
+import sun.misc.resources.Messages_pt_BR;
 
 import javax.persistence.Id;
+import java.lang.reflect.Type;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -23,6 +27,9 @@ public class SalvoController {
     @Autowired
     private GamePlayerRepository gamePlayerRepository;
 
+    @Autowired
+    private ShipRepository shipRepository;
+
     @RequestMapping("/games")
     public List<Object> gameList() {
         List<Object> list = new ArrayList<>();
@@ -34,12 +41,10 @@ public class SalvoController {
             Map<String, Object> map = new LinkedHashMap<>();
             map.put("Id", games.get(i).getId());
             map.put("created", games.get(i).getCreationDate());
-
             map.put("gameplayers", games.get(i).getGamePlayers()
                     .stream()
                     .map(gamePlayer -> gamePlayerMap(gamePlayer))
                     .collect(Collectors.toList()));
-
             list.add(map);
 
         }
@@ -65,27 +70,40 @@ public class SalvoController {
 
     @RequestMapping("/game_view/{gamePlayerId}")
     public Map<String, Object> gamePlayerId ( @PathVariable long gamePlayerId){
-            GamePlayer gamePlayer = gamePlayerRepository.findOne(gamePlayerId);
-            Game theGame = gamePlayer.getGame();
+        GamePlayer gamePlayer = gamePlayerRepository.findOne(gamePlayerId);
+        Game theGame = gamePlayer.getGame();
 
-            Map<String, Object> map = new LinkedHashMap<>();
-            map.put("id", theGame.getId());
-            map.put("created", theGame.getCreationDate());
-            map.put("gameplayers", theGame.getGamePlayers().stream().map(gamePlayer1 -> eachGamePlayerMap(gamePlayer1))
-                    .collect(Collectors.toList()));
+        Map<String, Object> map = new LinkedHashMap<>();
+        map.put("id", theGame.getId());
+        map.put("created", theGame.getCreationDate());
+        map.put("gameplayers", theGame.getGamePlayers().stream().map(gp -> eachGamePlayerMap(gp))
+                .collect(Collectors.toList()));
 
-            return map;
-        }
-
-
-        public Map<String, Object> eachGamePlayerMap (GamePlayer gamePlayer){
-            Map<String, Object> map = new LinkedHashMap<>();
-            map.put("id", gamePlayer.getId());
-            map.put("email", gamePlayer.getPlayer().getEmail());
-
-
-            return map;
-
-
-        }
+        Set<Ship> setOfShips = gamePlayer.getShips();
+        map.put("ships", setOfShips.stream().map(Ship -> mapOfShip(Ship)).collect(Collectors.toList()));
+        return map;
     }
+
+
+
+    public Map<String, Object> eachGamePlayerMap (GamePlayer gamePlayer){
+        Map<String, Object> map = new LinkedHashMap<>();
+        map.put("id", gamePlayer.getId());
+        map.put("email", gamePlayer.getPlayer().getEmail());
+
+        return map;
+
+    }
+
+    public Map<String, Object> mapOfShip (Ship ship) {
+        Map<String, Object> map = new LinkedHashMap<>();
+        map.put("type",ship.getType() );
+        map.put("locations", ship.getCells());
+
+        return map;
+
+    }
+
+
+
+}
