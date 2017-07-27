@@ -37,7 +37,11 @@ public class GamePlayer {
     public GamePlayer (Date joinDate, Game newGame, Player newPlayer) {
         this.joinDate = joinDate;
         this.game = newGame;
+        // Avisar a newGame que ESTE gamePlayer es suyo tambien
+        newGame.addGamePlayer(this);
         this.player = newPlayer;
+        // Avisar a newPlayer que ESTE gamePlayer es suyo tambien
+        newPlayer.addGamePlayer(this);
 
     }
 
@@ -71,5 +75,9 @@ public class GamePlayer {
 
     public Set<Ship> getShips() {
         return this.ships;
+    }
+
+    public  void addShips( Ship ship){
+        ships.add(ship);
     }
 }

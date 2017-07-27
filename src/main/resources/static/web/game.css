@@ -24,7 +24,13 @@ h1{
   
 }
 
+h2{ 
+  display: flex;
+  justify-content: flex-start;
+  color: skyblue;
+   
+}
 
-.ocupedcell {
+.ocupedCell {
   background-color: skyblue;
 }

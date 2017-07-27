@@ -22,7 +22,6 @@ public class Player {
     @OneToMany(mappedBy = "player", fetch = FetchType.EAGER)
     private Set<GamePlayer> gamePlayers = new HashSet<>();
 
-
     public Player() { }
 
     public Player(String userNameInput, String emailInput) {
@@ -57,8 +56,12 @@ public class Player {
     public Set<GamePlayer> getGamePlayers(){
         return gamePlayers;
     }
-}
 
+    public void addGamePlayer (GamePlayer gamePlayer) {
+        gamePlayers.add(gamePlayer);
+    }
+
+}
 
 
 

@@ -48,7 +48,9 @@ public class Game {
         this.creationDate =  creationDate.from(creationDate.toInstant().plusSeconds(seconds));
     }
 
-
+    public void addGamePlayer (GamePlayer gamePlayer){
+        gamePlayers.add(gamePlayer);
+    }
 
 }
 

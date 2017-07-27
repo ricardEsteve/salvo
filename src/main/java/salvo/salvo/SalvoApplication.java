@@ -1,14 +1,13 @@
 package salvo.salvo;
 
-        import org.springframework.boot.SpringApplication;
-        import org.springframework.boot.autoconfigure.SpringBootApplication;
-        import org.springframework.boot.CommandLineRunner;
-        import org.springframework.context.annotation.Bean;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Bean;
 
-        import java.util.ArrayList;
-        import java.util.Arrays;
-        import java.util.Date;
-        import java.util.List;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
 
 @SpringBootApplication
 
@@ -62,6 +61,7 @@ public class SalvoApplication {
 
 
             Ship ship1 = new Ship(ShipType.patrolBoat, gamePlayer1, Arrays.asList("A1", "A2"));
+
             Ship ship2 = new Ship(ShipType.carrier, gamePlayer1, new ArrayList<>(Arrays.asList("C1","C2","C3","C4","C5")));
             Ship ship3 = new Ship(ShipType.submarine, gamePlayer2, new ArrayList<>(Arrays.asList("H2","H3","H4")));
             Ship ship4 = new Ship(ShipType.destroyer, gamePlayer2, new ArrayList<>(Arrays.asList("B2","B3","B4")));

@@ -1,15 +1,11 @@
 package salvo.salvo;
 
-import org.omg.CORBA.MARSHAL;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.method.annotation.ModelAttributeMethodProcessor;
-import sun.misc.resources.Messages_pt_BR;
 
-import javax.persistence.Id;
-import java.lang.reflect.Type;
 import java.util.*;
 import java.util.stream.Collectors;
 

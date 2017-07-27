@@ -32,6 +32,7 @@ public class Ship {
     public Ship(ShipType shipType, GamePlayer gamePlayer,  List<String> cells) {
         this.type = shipType;
         this.gamePlayer = gamePlayer;
+        gamePlayer.addShips(this);
         this.cells = cells;
     }
 
