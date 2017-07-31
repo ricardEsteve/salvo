@@ -27,13 +27,37 @@ public class Salvo {
     public Salvo() {}
 
     public Salvo (GamePlayer gamePlayer, int turn, List<String> cells){
-      this.gamePlayer= gamePlayer;
-      this.turn= turn;
-      gamePlayer.addSalvo(this);
-      this.cells= cells;
+        this.gamePlayer= gamePlayer;
+        this.turn= turn;
+        gamePlayer.addSalvo(this);
+        this.cells= cells;
 
     }
+    public long getId(){
+        return id;
+    }
+    public GamePlayer getGamePlayer (){
+        return gamePlayer;
+    }
+    public void setGamePlayer (GamePlayer gamePlayer){
+        this.gamePlayer = gamePlayer;
+    }
 
+    public List<String> getCells (){
+        return cells;
+    }
 
+    public void setCells(List<String> cellsList) {
+        this.cells = cellsList;
+    }
 
+    public int getTurn(){
+        return turn;
+    }
+
+    public void setTurn (int turn){
+        this.turn = turn;
+    }
 }
+
+
