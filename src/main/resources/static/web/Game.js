@@ -8,8 +8,9 @@ $(function () {
     createGrid(10);
 
     putShips(json.ships);
-
-    showPlayer(json.gameplayers);
+    console.log(json);
+    showPlayer(json.gamePlayers);
+    
 
   });
 
@@ -25,11 +26,13 @@ function getURLParameterByName(name) {
   if (!results) return null;
   if (!results[2]) return '';
   return decodeURIComponent(results[2].replace(/\+/g, " "));
+  
 }
 
 
 function showPlayer(objectGamePlayers) {
-  var list = document.getElementById("objectPlayers");
+  
+  var list = document.getElementById("objectGamePlayers");
   var li = document.createElement("li");
 
   if (objectGamePlayers.length == 2) {

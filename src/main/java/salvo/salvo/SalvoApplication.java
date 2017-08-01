@@ -18,7 +18,11 @@ public class SalvoApplication {
     }
 
     @Bean
-    public CommandLineRunner initData(PlayerRepository playerRepository, GameRepository gameRepository, GamePlayerRepository gamePlayerRepository, ShipRepository shipRepository) {
+    public CommandLineRunner initData(PlayerRepository playerRepository,
+                                      GameRepository gameRepository,
+                                      GamePlayerRepository gamePlayerRepository,
+                                      ShipRepository shipRepository,
+                                      SalvoRepository salvoRepository) {
         return (String... args) -> {
 
             Player Jbauer = new Player("JBauer", "JBauer@example.com");
@@ -61,7 +65,6 @@ public class SalvoApplication {
 
 
             Ship ship1 = new Ship(ShipType.patrolBoat, gamePlayer1, Arrays.asList("A1", "A2"));
-
             Ship ship2 = new Ship(ShipType.carrier, gamePlayer1, new ArrayList<>(Arrays.asList("C1","C2","C3","C4","C5")));
             Ship ship3 = new Ship(ShipType.submarine, gamePlayer2, new ArrayList<>(Arrays.asList("H2","H3","H4")));
             Ship ship4 = new Ship(ShipType.destroyer, gamePlayer2, new ArrayList<>(Arrays.asList("B2","B3","B4")));
@@ -75,6 +78,20 @@ public class SalvoApplication {
             shipRepository.save(ship4);
             shipRepository.save(ship5);
             shipRepository.save(ship6);
+
+
+            Salvo salvo1 = new Salvo(gamePlayer1, 1,new ArrayList<>(Arrays.asList("D5", "D6")));
+            Salvo salvo2 = new Salvo(gamePlayer2, 1,new ArrayList<>(Arrays.asList("G5", "H5")));
+            Salvo salvo3 = new Salvo(gamePlayer1, 2,new ArrayList<>(Arrays.asList("A1", "B1")));
+            Salvo salvo4 = new Salvo(gamePlayer2, 2,new ArrayList<>(Arrays.asList("D3", "D4")));
+
+
+            salvoRepository.save(salvo1);
+            salvoRepository.save(salvo2);
+            salvoRepository.save(salvo3);
+            salvoRepository.save(salvo4);
+
+
 
 
         };

@@ -72,15 +72,19 @@ public class SalvoController {
         Map<String, Object> map = new LinkedHashMap<>();
         map.put("id", theGame.getId());
         map.put("created", theGame.getCreationDate());
-        map.put("gameplayers", theGame.getGamePlayers().stream().map(gp -> eachGamePlayerMap(gp))
+        map.put("gamePlayers", theGame.getGamePlayers().stream().map(gp -> eachGamePlayerMap(gp))
                 .collect(Collectors.toList()));
 
         Set<Ship> setOfShips = gamePlayer.getShips();
         map.put("ships", setOfShips.stream().map(Ship -> mapOfShip(Ship)).collect(Collectors.toList()));
+
+
+
+        Set<GamePlayer> bothGamePlayers = theGame.getGamePlayers();
+
+        map.put("salvoes", bothGamePlayers.stream().map(gamePlayer1 -> mapOfSalvo(gamePlayer1)).collect(Collectors.toList()));
         return map;
     }
-
-
 
     public Map<String, Object> eachGamePlayerMap (GamePlayer gamePlayer){
         Map<String, Object> map = new LinkedHashMap<>();
@@ -99,7 +103,21 @@ public class SalvoController {
         return map;
 
     }
+    public List<Object> mapOfSalvo (GamePlayer gamePlayer){
 
+        List<Object> list= new ArrayList<>();
+        Set<Salvo> setOfSalvoes = gamePlayer.getSalvo();
+
+        for (Salvo salvo : setOfSalvoes) {
+            Map<String, Object> map= new LinkedHashMap<>();
+            map.put("turn", salvo.getTurn());
+            map.put("player", gamePlayer.getPlayer().getId());
+            map.put("locations",salvo.getCells());
+            list.add(map);
+        }
+
+        return list;
+    }
 
 
 }
