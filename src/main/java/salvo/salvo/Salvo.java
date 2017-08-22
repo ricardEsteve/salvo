@@ -26,7 +26,7 @@ public class Salvo {
 
     public Salvo() {}
 
-    public Salvo (GamePlayer gamePlayer, int turn, List<String> cells){
+    public Salvo(GamePlayer gamePlayer, int turn, List<String> cells){
         this.gamePlayer= gamePlayer;
         this.turn= turn;
         gamePlayer.addSalvo(this);

@@ -14,7 +14,7 @@ import java.util.Set;
 @Entity
 public class Player {
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private String userName;
     private String email;
@@ -22,15 +22,21 @@ public class Player {
     @OneToMany(mappedBy = "player", fetch = FetchType.EAGER)
     private Set<GamePlayer> gamePlayers = new HashSet<>();
 
-    public Player() { }
+    @OneToMany(mappedBy = "player", fetch = FetchType.EAGER)
+    private Set<Score> scores = new HashSet<>();
+
+    public Player() {
+    }
 
     public Player(String userNameInput, String emailInput) {
         this.userName = userNameInput;
         this.email = emailInput;
     }
+
     public String getUserName() {
         return userName;
     }
+
     public void setUserName(String userName) {
         this.userName = userName;
     }
@@ -38,6 +44,7 @@ public class Player {
     public String getEmail() {
         return email;
     }
+
     public void setEmail(String email) {
         this.email = email;
     }
@@ -49,19 +56,30 @@ public class Player {
     public long getId() {
         return id;
     }
-    public void setGamePlayers (Set<GamePlayer> gamePlayers){
-    this.gamePlayers = gamePlayers;
+
+    public void setGamePlayers(Set<GamePlayer> gamePlayers) {
+        this.gamePlayers = gamePlayers;
     }
 
-    public Set<GamePlayer> getGamePlayers(){
+    public Set<GamePlayer> getGamePlayers() {
         return gamePlayers;
     }
 
-    public void addGamePlayer (GamePlayer gamePlayer) {
+    public void addGamePlayer(GamePlayer gamePlayer) {
         gamePlayers.add(gamePlayer);
     }
 
+    public double getScore(Game anyGame) {
+
+        for (Score score : scores) {
+            if (score.getGame().equals(anyGame)) {
+
+                return score.getPoints();
+            }
+
+        }
+        return -1;
+    }
+
+
 }
-
-
-

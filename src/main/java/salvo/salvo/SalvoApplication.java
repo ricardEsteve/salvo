@@ -22,12 +22,13 @@ public class SalvoApplication {
                                       GameRepository gameRepository,
                                       GamePlayerRepository gamePlayerRepository,
                                       ShipRepository shipRepository,
-                                      SalvoRepository salvoRepository) {
+                                      SalvoRepository salvoRepository,
+                                      ScoreRepository scoreRepository) {
         return (String... args) -> {
 
             Player Jbauer = new Player("JBauer", "JBauer@example.com");
-            Player Cobrien = new Player ("Cobrien", "Cobrien@example.com");
-            Player Kbauer = new Player ("Kbauer", "Kbauer@example.com");
+            Player Cobrien = new Player("Cobrien", "Cobrien@example.com");
+            Player Kbauer = new Player("Kbauer", "Kbauer@example.com");
             Player Talmeida = new Player("Talmeida", "Talmeida@example.com");
 
 
@@ -81,7 +82,7 @@ public class SalvoApplication {
 
 
             Salvo salvo1 = new Salvo(gamePlayer1, 1,new ArrayList<>(Arrays.asList("D5", "D6")));
-            Salvo salvo2 = new Salvo(gamePlayer2, 1,new ArrayList<>(Arrays.asList("G5", "H5")));
+            Salvo salvo2 = new Salvo(gamePlayer2, 1,new ArrayList<>(Arrays.asList("A1", "H5")));
             Salvo salvo3 = new Salvo(gamePlayer1, 2,new ArrayList<>(Arrays.asList("A1", "B1")));
             Salvo salvo4 = new Salvo(gamePlayer2, 2,new ArrayList<>(Arrays.asList("D3", "D4")));
 
@@ -90,6 +91,20 @@ public class SalvoApplication {
             salvoRepository.save(salvo2);
             salvoRepository.save(salvo3);
             salvoRepository.save(salvo4);
+
+            Score score1 = new Score(gameOne, Jbauer, new Date(), 1);
+
+            Score score2= new Score(gameOne, Cobrien, new Date(), 0);
+
+            Score score3= new Score(gameTwo, Kbauer, new Date(), 0.5);
+
+            Score score4= new Score(gameTwo, Talmeida, new Date(), 0.5);
+
+
+            scoreRepository.save(score1);
+            scoreRepository.save(score2);
+            scoreRepository.save(score3);
+            scoreRepository.save(score4);
 
 
 

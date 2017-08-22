@@ -1,7 +1,6 @@
 package salvo.salvo;
 
 import javax.persistence.*;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +28,7 @@ public class Ship {
 
     public Ship() {}
 
-    public Ship(ShipType shipType, GamePlayer gamePlayer,  List<String> cells) {
+    public Ship(ShipType shipType, GamePlayer gamePlayer, List<String> cells) {
         this.type = shipType;
         this.gamePlayer = gamePlayer;
         gamePlayer.addShips(this);

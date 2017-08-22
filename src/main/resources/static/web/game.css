@@ -1,31 +1,81 @@
-table{
-  border: skyblue 1px solid; 
-   
+.tables {
+  display: flex;
+  align-content: space-between;
+  width: auto;
+  align-items: center;
+  padding: 10px;
+}
+
+table {
+  border: skyblue 1px solid;
+}
+
+li {
+  color: skyblue;
+}
+
+.shot {
+  margin: 0;
+  text-align: center;
+  border: 1px solid orange;
+  border-radius: 20px;
+  background-color: orange;
 }
 
 
-.cell{
-  
-  border: skyblue 1px solid; 
+
+p {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+
+.cell {
+  border: skyblue 1px solid;
   width: 30px;
   height: 30px;
 }
 
-h1{ 
+h1 {
   display: flex;
   justify-content: flex-start;
   color: skyblue;
-  
-  
 }
 
-h2{ 
+h2 {
   display: flex;
   justify-content: flex-start;
   color: skyblue;
-   
 }
+
+
+
+
+
 
 .ocupedCell {
   background-color: skyblue;
 }
+
+.firedCell{
+  background-color: orange;
+  margin: 0;
+  text-align: center;
+  border: 1px solid orange;
+  border-radius: 7px;
+}
+
+.crashCell {
+  /*margin: 0;
+  text-align: center;
+  border: 1px solid red;
+  border-radius: 20px;*/
+  background-color: red;
+  
+}
+
+
+

@@ -31,42 +31,42 @@ public class GamePlayer {
     @OneToMany(mappedBy = "gamePlayer", fetch = FetchType.EAGER)
     private Set<Salvo> salvos = new HashSet<>();
 
-    public GamePlayer (){}
-
-    public GamePlayer (Date joinDate, Game newGame, Player newPlayer) {
-        this.joinDate = joinDate;
-        this.game = newGame;
-        // Avisar a newGame que ESTE gamePlayer es suyo tambien
-        newGame.addGamePlayer(this);
-        this.player = newPlayer;
-        // Avisar a newPlayer que ESTE gamePlayer es suyo tambien
-        newPlayer.addGamePlayer(this);
-
-
+    public GamePlayer() {
     }
 
-    public Date getJoinDate(){
+    public GamePlayer(Date joinDate, Game newGame, Player newPlayer) {
+        this.joinDate = joinDate;
+        this.game = newGame;
+        // Avisar a newGame que ESTE GamePlayer es suyo tambien
+        newGame.addGamePlayer(this);
+        this.player = newPlayer;
+        // Avisar a newPlayer que ESTE GamePlayer es suyo tambien
+        newPlayer.addGamePlayer(this);
+    }
+
+
+    public Date getJoinDate() {
         return this.joinDate;
     }
 
-    public void setJoinDate(Date newDate){
+    public void setJoinDate(Date newDate) {
         this.joinDate = newDate;
     }
 
-    public Game getGame (){
+    public Game getGame() {
         return this.game;
     }
 
-    public void setGame(Game game){
-        this.game= game;
+    public void setGame(Game game) {
+        this.game = game;
     }
 
-    public Player getPlayer(){
+    public Player getPlayer() {
         return this.player;
     }
 
-    public void setPlayer( Player player){
-        this.player= player;
+    public void setPlayer(Player player) {
+        this.player = player;
     }
 
     public long getId() {
@@ -77,7 +77,7 @@ public class GamePlayer {
         return this.ships;
     }
 
-    public  void addShips( Ship ship){
+    public void addShips(Ship ship) {
         ships.add(ship);
     }
 
@@ -89,10 +89,8 @@ public class GamePlayer {
         this.salvos = salvo;
     }
 
-    public void  addSalvo (Salvo salvo) {
-       salvos.add(salvo);
-
+    public void addSalvo(Salvo salvo) {
+        salvos.add(salvo);
     }
 
-    }
-
+}
