@@ -63,6 +63,15 @@ function createGrid(cellNumber) {
 
     for (var j = 0; j < cellNumber + 1; j++) {
       var cell = document.createElement("td");
+      if(i == 0){
+            cell.innerHTML = numbers[j];
+            }
+
+            if(j == 0){
+            cell.innerHTML = letters[i];
+            }
+      
+    
       cell.className = "cell";
       cell.setAttribute("data-location", letters[i] + numbers[j]);
       row.appendChild(cell);
@@ -84,16 +93,26 @@ function putShips(objectShips) {
 
 function createSalvoGrid(cellNumber) {
   var tbody = document.getElementById("tblsalvo");
-  var letters = [" ", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
-  var numbers = [" ", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
+  var letters = ["", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
+  var numbers = ["", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
 
   for (var i = 0; i < cellNumber + 1; i++) {
     var row = document.createElement("tr");
 
     for (var j = 0; j < cellNumber + 1; j++) {
+      
       var cell = document.createElement("td");
+      
+      if(i == 0){
+      cell.innerHTML = numbers[j];
+      }
+      
+      if(j == 0){
+      cell.innerHTML = letters[i];
+      }
       cell.className = "cell";
       cell.setAttribute("data-locationOponent", letters[i] + numbers[j]);
+      
       row.appendChild(cell);
     }
     tbody.appendChild(row);

@@ -24,8 +24,7 @@ public class Score {
     private Player player;
 
 
-    public Score() {
-        finishDate = new Date();
+    public Score() {finishDate = new Date();
     }
 
     public Score(Game game, Player player, Date date, double points){

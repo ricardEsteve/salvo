@@ -1,16 +1,32 @@
 package salvo.salvo;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.configurers.GlobalAuthenticationConfigurerAdapter;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.web.WebAttributes;
+import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 @SpringBootApplication
-
 public class SalvoApplication {
 
     public static void main(String[] args) {
@@ -26,10 +42,10 @@ public class SalvoApplication {
                                       ScoreRepository scoreRepository) {
         return (String... args) -> {
 
-            Player Jbauer = new Player("JBauer", "JBauer@example.com");
-            Player Cobrien = new Player("Cobrien", "Cobrien@example.com");
-            Player Kbauer = new Player("Kbauer", "Kbauer@example.com");
-            Player Talmeida = new Player("Talmeida", "Talmeida@example.com");
+            Player Jbauer = new Player("JBauer", "JBauer@example.com", "24");
+            Player Cobrien = new Player("Cobrien", "Cobrien@example.com", "42");
+            Player Kbauer = new Player("Kbauer", "Kbauer@example.com", "kb");
+            Player Talmeida = new Player("Talmeida", "Talmeida@example.com", "mole");
 
 
             playerRepository.save(Jbauer);
@@ -55,6 +71,7 @@ public class SalvoApplication {
             GamePlayer gamePlayer3 = new GamePlayer(date, gameTwo, Kbauer);
             GamePlayer gamePlayer4 = new GamePlayer(date, gameTwo, Talmeida);
             GamePlayer gamePlayer5 = new GamePlayer(date, gameThree,Jbauer);
+
 
 
             gamePlayerRepository.save(gamePlayer1);
@@ -110,5 +127,73 @@ public class SalvoApplication {
 
 
         };
+    }
+}
+
+@Configuration
+class WebSecurityConfiguration extends GlobalAuthenticationConfigurerAdapter {
+    @Autowired
+    private PlayerRepository playerRepository;
+
+    @Bean
+    UserDetailsService userDetailsService() {
+        return new UserDetailsService() {
+            @Override
+
+            public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
+                Player player = playerRepository.findByEmail(name);
+                if (player != null) {
+                    return new User(player.getEmail(), player.getPassword(),
+                            AuthorityUtils.createAuthorityList("USER"));
+                } else {
+                    throw new UsernameNotFoundException("Unknown user: " + name);
+                }
+            }
+        };
+    }
+}
+
+@EnableWebSecurity
+@Configuration
+class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.authorizeRequests()
+                .antMatchers("/web/games.html").permitAll()
+                .antMatchers("/web/games.css").permitAll()
+                .antMatchers("/web/games.js").permitAll()
+                .antMatchers("/api/login").permitAll()
+                .antMatchers("/api/games").permitAll()
+                .antMatchers("/api/players").permitAll()
+                .anyRequest().fullyAuthenticated();
+
+        http.formLogin()
+                .usernameParameter("name")
+                .passwordParameter("password")
+                .loginPage("/api/login");
+
+        http.logout().logoutUrl("/api/logout");
+
+        // turn off checking for CSRF tokens
+        http.csrf().disable();
+
+        // if user is not authenticated, just send an authentication failure response
+        http.exceptionHandling().authenticationEntryPoint((req, res, exc) -> res.sendError(HttpServletResponse.SC_UNAUTHORIZED));
+
+        // if login is successful, just clear the flags asking for authentication
+        http.formLogin().successHandler((req, res, auth) -> clearAuthenticationAttributes(req));
+
+        // if login fails, just send an authentication failure response
+        http.formLogin().failureHandler((req, res, exc) -> res.sendError(HttpServletResponse.SC_UNAUTHORIZED));
+
+        // if logout is successful, just send a success response
+        http.logout().logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler());
+    }
+
+    private void clearAuthenticationAttributes(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.removeAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
+        }
     }
 }

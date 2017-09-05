@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link rel="stylesheet" href="games.css">
+  <meta charset="UTF-8">
+  <title>Salvo!</title>
+</head>
+
+<body>
+  <h1>BattleShip Commanders</h1>
+  <div class="theMain">
+
+    <div class="buttons">
+
+      <div class="signIn hidden">
+
+        <div class="data">
+          <label for="email">email</label>
+          <input type="text" id="email">
+          <label for="password">password</label>
+          <input type="text" id="password">
+          <button type="button" id="logInButton">Log In</button>
+        </div>
+
+
+      </div>
+      <button type="button" class="hidden" id="logOutButton">Log Out</button>
+
+
+      <div class="signUp hidden">
+
+        <div class="data">
+          <label for="name">user name</label>
+          <input type="text" id="name">
+          <label for="newEmail">email</label>
+          <input type="text" id="newEmail">
+          <label for="newPassword">password</label>
+          <input type="text" id="newPassword">
+          <button type="button" id="signUpButton">Sign Up</button>
+        </div>
+      </div>
+
+      <button type="button" class="hidden" id="newGameButton">New Game</button>
+
+
+    </div>
+
+    <div class="listAndTable">
+      <ol id="list"></ol>
+
+      <table id="tbl">
+        <thead>
+          <tr>
+            <th scope="col">Player</th>
+            <th scope="col">total</th>
+            <th scope="col">won</th>
+            <th scope="col">lost</th>
+            <th scope="col">tied</th>
+          </tr>
+        </thead>
+        <tbody id="leaderBoard">
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script type="text/javascript" src="games.js"></script>
+
+</body>
+
+</html>

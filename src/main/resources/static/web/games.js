@@ -1,22 +1,93 @@
 $(function () {
-
-  $.getJSON("/api/games", function (json) {
-    console.log(json);
-
-    createList(json);
-
-    playerList(json);
-
-  });
+  $("#logInButton").click(logIn);
+  $("#signUpButton").click(signUp);
+  $("#logOutButton").click(signOut);
+  $("#newGameButton").click(newGame);
+  $.getJSON("/api/games", onDataReady);
 });
 
+
+function onDataReady(json) {
+  console.log(json);
+
+  if (json.player == undefined) {
+    $(".signIn").show();
+    $(".signUp").show();
+    
+    
+  } else {
+    $("#logOutButton").show();
+     $("#newGameButton").show();
+    
+    
+  }
+  //console.log(json.games);
+  createList(json.games);
+  playerList(json.games);
+}
+
+
+
+function signOut() {
+  $.post("/api/logout").done(function() {
+    location.reload();
+  });
+}
+
+function signUp() {
+  var userName = $("#name").val();
+  var email = $("#newEmail").val();
+  var password = $("#newPassword").val();
+  var newUser = {
+    "userName": userName,
+    "email": email,
+    "password": password
+  };
+
+  $("#logOutButton").show();
+  $("#newGameButton").show();
+  $("#logInButton").hide();
+  $("#signUpButton").hide();
+
+  $.post("/api/players", newUser).done(function () {
+    var user = {
+      "name": newUser.email,
+      "password": newUser.password
+    }
+    $.post("/api/login", user).done(onLogIn);
+
+  });
+
+}
+
+function logIn() {
+  var email = $("#email").val();
+  var password = $("#password").val();
+  var user = {
+    "name": email,
+    "password": password
+  };
+  $.post("/api/login", user).done(onLogIn);
+  
+}
+
+function onLogIn() {
+  $("#logOutButton").show();
+  $("#newGameButton").show();
+  $(".data").hide();
+  location.reload();
+}
+
+function newGame(){
+  $.post("/api/games").done(function(response){
+  } );
+}
+
 function createList(games) {
-  //console.log(games);
   for (var i = 0; i < games.length; i++) {
     var date = new Date(games[i].created).toLocaleString();
     var email1 = games[i].gameplayers[0].player.email;
     var email2;
-
     if (games[i].gameplayers.length == 1) {
       email2 = "Waiting player";
     } else {
@@ -32,14 +103,14 @@ function createList(games) {
 
 }
 
-function playerList(JSON) {
+function playerList(games) {
 
   var results = {};
 
-  for (var i = 0; i < JSON.length; i++) {
-    for (var j = 0; j < JSON[i].gameplayers.length; j++) {
-      var email = JSON[i].gameplayers[j].player.email;
-      var score = JSON[i].gameplayers[j].player.score;
+  for (var i = 0; i < games.length; i++) {
+    for (var j = 0; j < games[i].gameplayers.length; j++) {
+      var email = games[i].gameplayers[j].player.email;
+      var score = games[i].gameplayers[j].player.score;
 
       if (!results.hasOwnProperty(email)) {
         results[email] = {
@@ -73,22 +144,22 @@ function playerList(JSON) {
 
 function listInTable(results) {
 
-  console.log(results);
+  //console.log(results);
   var tbody = document.getElementById("leaderBoard");
-  
-  var resultsArray =[];
-  
-  for (var mail in results){
+
+  var resultsArray = [];
+
+  for (var mail in results) {
     resultsArray.push(results[mail]);
   }
-  
-  resultsArray.sort( function (a,b){
-   return b.total - a.total;
-    
+
+  resultsArray.sort(function (a, b) {
+    return b.total - a.total;
+
   })
-  
-  
-  
+
+
+
   for (var index in resultsArray) {
     var currentPlayerData = resultsArray[index];
     var row = document.createElement("tr");
@@ -126,4 +197,3 @@ function listInTable(results) {
   }
 
 }
-

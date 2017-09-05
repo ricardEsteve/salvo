@@ -18,6 +18,7 @@ public class Player {
     private long id;
     private String userName;
     private String email;
+    private String password;
 
     @OneToMany(mappedBy = "player", fetch = FetchType.EAGER)
     private Set<GamePlayer> gamePlayers = new HashSet<>();
@@ -28,9 +29,10 @@ public class Player {
     public Player() {
     }
 
-    public Player(String userNameInput, String emailInput) {
+    public Player(String userNameInput, String emailInput, String password) {
         this.userName = userNameInput;
         this.email = emailInput;
+        this.password = password;
     }
 
     public String getUserName() {
@@ -65,21 +67,33 @@ public class Player {
         return gamePlayers;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public void addGamePlayer(GamePlayer gamePlayer) {
         gamePlayers.add(gamePlayer);
     }
 
-    public double getScore(Game anyGame) {
+    public Score getScore(Game anyGame) {
 
         for (Score score : scores) {
             if (score.getGame().equals(anyGame)) {
-
-                return score.getPoints();
+                return score;
             }
-
         }
-        return -1;
+        return null;
+
+        //return scores.stream().filter(score -> score.getGame().equals(anyGame)).findFirst().orElse(null);
     }
 
-
 }
+
+
+//$.post("/api/login", { name: "JBauer@example.com", pwd: "24" }).done(function() { console.log("logged in!"); }).fail(function() { console.log("log in failed!"); })
+
+//$.post("/api/logout", null).done(function() { console.log("logged out!"); }).fail(function() { console.log("log out failed!"); })
