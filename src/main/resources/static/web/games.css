@@ -72,6 +72,30 @@ body{
   margin-bottom: 10px;
 }
 
+.joinInButton{
+  padding-bottom: 5px;
+  padding-top: 5px;
+  color: white;
+  background-color: skyblue;
+  margin-bottom: 5px; 
+}
+
+.playButton{
+  padding-bottom: 5px;
+  padding-top: 5px;
+  color: white;
+  background-color: skyblue;
+  margin-bottom: 5px; 
+}
+
+.viewButton{
+  padding-bottom: 5px;
+  padding-top: 5px;
+  color: white;
+  background-color: skyblue;
+  margin-bottom: 5px; 
+}
+
 #logOutButton{
   padding-bottom: 10px;
   padding-top: 10px;

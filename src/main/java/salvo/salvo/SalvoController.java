@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import sun.reflect.generics.repository.MethodRepository;
 
 import javax.persistence.Id;
 import java.lang.reflect.Method;
@@ -130,10 +129,7 @@ public class SalvoController {
     }
 
 
-
-
-
-    @RequestMapping("/game_view/{gamePlayerId}")
+    @RequestMapping(value = "/game_view/{gamePlayerId}")
     public ResponseEntity<Object> gamePlayerId ( @PathVariable long gamePlayerId, Authentication authentication){
         GamePlayer gamePlayer = gamePlayerRepository.findOne(gamePlayerId);
         Game theGame = gamePlayer.getGame();
@@ -145,6 +141,8 @@ public class SalvoController {
         }else if(gamePlayer == null){
             return new ResponseEntity<Object>("the gameplayer does not exists",HttpStatus.FORBIDDEN);
         }
+
+
 
         map.put("id", theGame.getId());
         map.put("created", theGame.getCreationDate());
@@ -209,6 +207,46 @@ public class SalvoController {
             return new ResponseEntity<Object>(responseMap, HttpStatus.CREATED);
         }
     }
+
+    @RequestMapping(value= "/game/{gameId}/players", method = RequestMethod.POST)
+    public ResponseEntity<Object> gameId ( @PathVariable Long gameId, Authentication authentication) {
+        if(isGuest(authentication)){
+            return new  ResponseEntity <Object>("you are not logged in",HttpStatus.UNAUTHORIZED);
+        }
+
+        if(gameId == null){
+            return new ResponseEntity<Object>("the gameId does not exists",HttpStatus.FORBIDDEN);
+        }
+
+        Game gameToJoin = gameRepository.findOne(gameId);
+
+        if(gameToJoin == null) {
+            return new ResponseEntity<Object>("you cannot join the game", HttpStatus.UNAUTHORIZED);
+        }
+        if(gameToJoin.getGamePlayers().size() !=1){
+            return new ResponseEntity<Object>("the game is full", HttpStatus.UNAUTHORIZED);
+
+        }
+
+        Player joiningPlayer = playerRepository.findByEmail(authentication.getName());
+        Player waitingPlayer = gameToJoin.getGamePlayers().stream().findFirst().orElse(null).getPlayer();
+        if(joiningPlayer == waitingPlayer ) {
+        return new ResponseEntity<Object>("you are already waiting",HttpStatus.FORBIDDEN);
+        }
+
+
+
+        Date date = new Date();
+        GamePlayer secondGamePlayer = new GamePlayer(date,gameToJoin, joiningPlayer);
+        gamePlayerRepository.save(secondGamePlayer);
+
+        Map<String, Object> NewGamePlayerIDMap = new LinkedHashMap<>();
+        NewGamePlayerIDMap.put("gpId",secondGamePlayer.getId());
+        return new ResponseEntity<Object>(NewGamePlayerIDMap,HttpStatus.CREATED);
+
+
+    }
+
 
     public boolean isEmailTaken (String email){
 
