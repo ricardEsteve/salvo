@@ -1,133 +1,108 @@
-body{
+body {
   width: 70%;
   margin: auto;
-  
+  background-image: url("background.jpg");
+  background-size: cover;
 }
 
-.theMain{
+
+.theMain {
   display: flex;
   justify-content: space-between;
 }
-
-.buttons{
+.buttons {
   width: 25%;
 }
-
-
-.listAndTable{
+.listAndTable {
   width: 70%;
 }
-
-.hidden{
+.hidden {
   display: none;
 }
-
-.data{
+.data {
   display: flex;
   flex-direction: column;
   align-content: center;
 }
-
 #logInButton {
   padding-bottom: 10px;
   padding-top: 10px;
   color: white;
   background-color: skyblue;
   margin-bottom: 10px;
- 
 }
-
 #logInButton input {
   display: inline-block;
   width: 100%;
 }
-
-
-.data{
+.data {
   display: flex;
   flex-direction: column;
   align-content: center;
 }
-
 #signUpButton {
-  
   padding-bottom: 10px;
   padding-top: 10px;
   color: white;
   background-color: skyblue;
   margin-bottom: 10px;
-   
 }
-
-#signUpButton input{
+#signUpButton input {
   display: inline-block;
   width: 100%;
 }
-
-#newGameButton{
+#newGameButton {
   padding-bottom: 10px;
   padding-top: 10px;
   color: white;
   background-color: skyblue;
   margin-bottom: 10px;
 }
-
-.joinInButton{
+.joinInButton {
   padding-bottom: 5px;
   padding-top: 5px;
   color: white;
   background-color: skyblue;
-  margin-bottom: 5px; 
+  margin-bottom: 5px;
 }
-
-.playButton{
+.playButton {
   padding-bottom: 5px;
   padding-top: 5px;
   color: white;
   background-color: skyblue;
-  margin-bottom: 5px; 
+  margin-bottom: 5px;
 }
-
-.viewButton{
+.viewButton {
   padding-bottom: 5px;
   padding-top: 5px;
   color: white;
   background-color: skyblue;
-  margin-bottom: 5px; 
+  margin-bottom: 5px;
 }
-
-#logOutButton{
+#logOutButton {
   padding-bottom: 10px;
   padding-top: 10px;
   color: white;
   background-color: skyblue;
   margin-bottom: 10px;
 }
-
 h1 {
   color: white;
   display: flex;
   justify-content: center;
-  background: skyblue;
-}
 
+}
 #list {
-  color: skyblue;
+  color: white;
 }
-
 #tbl {
   border: skyblue 1px solid;
-  
 }
-
-#leaderBoard{
+#leaderBoard {
   background-color: white;
   color: skyblue;
-  
 }
-
-th{
-  
+th {
   background-color: white;
   color: skyblue;
   padding-left: 10px;
@@ -135,51 +110,39 @@ th{
   padding-right: 10px;
   padding-top: 10px;
   margin-top: 10px;
-  
 }
-
-.emailCell{
+.emailCell {
   padding-left: 5px;
   padding-bottom: 2px;
   padding-right: 5px;
   padding-top: 2px;
   margin-top: 2px;
-  
-  
 }
-
-.totalCell{
+.totalCell {
   padding-left: 5px;
   padding-bottom: 2px;
   padding-right: 5px;
   padding-top: 2px;
   margin-top: 2px;
-   
 }
-
-.wonCell{
+.wonCell {
   padding-left: 5px;
   padding-bottom: 2px;
   padding-right: 5px;
   padding-top: 2px;
   margin-top: 2px;
-   
 }
-
-.lostCell{
+.lostCell {
   padding-left: 5px;
   padding-bottom: 2px;
   padding-right: 5px;
   padding-top: 2px;
   margin-top: 2px;
-   
 }
-
-.tiedCell{
+.tiedCell {
   padding-left: 5px;
   padding-bottom: 2px;
   padding-right: 5px;
   padding-top: 2px;
   margin-top: 2px;
-   
 }

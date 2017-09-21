@@ -31,7 +31,7 @@ function onDataReady(json) {
 
 function signOut() {
   $.post("/api/logout").done(function () {
-    location.reload();
+    location.replace("/web/games.html");
   });
 }
 
@@ -81,7 +81,6 @@ function onLogIn() {
 
 function newGame() {
   $.post("/api/games").done(function (response) {
-    console.log(response);
     location.assign("/web/game.html?gp=" + response.gpid);
   });
 }

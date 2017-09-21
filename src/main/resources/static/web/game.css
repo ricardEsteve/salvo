@@ -1,3 +1,10 @@
+body {
+  width: 70%;
+  margin: auto;
+  background-image: url("background.jpg");
+  background-size: cover;
+}
+
 .tables {
   display: flex;
   align-content: space-between;
@@ -7,11 +14,15 @@
 }
 
 table {
-  border: skyblue 1px solid;
+  border: white 1px solid;
+}
+
+.letters {
+  color: white;
 }
 
 li {
-  color: skyblue;
+  color: white;
 }
 
 .shot {
@@ -32,26 +43,26 @@ p {
 }
 
 .cell {
-  border: skyblue 1px solid;
+  border: white 1px solid;
   width: 30px;
   height: 30px;
+  color: white;
 }
-
 
 h1 {
   display: flex;
   justify-content: flex-start;
-  color: skyblue;
+  color: white;
 }
 
 h2 {
   display: flex;
   justify-content: flex-start;
-  color: skyblue;
+  color: white;
 }
 
 .ocupedCell {
-  background-color: skyblue;
+  background-color: white;
 }
 
 .firedCell {
@@ -63,6 +74,46 @@ h2 {
 }
 
 .crashCell {
- 
   background-color: red;
+}
+
+#buttonAndCheckButton {
+  display: flex;
+  justify-content: space-around;
+}
+
+#checkBoxText {
+  color: white;
+}
+
+#checkDoneButtonText {
+  padding-bottom: 10px;
+  padding-top: 10px;
+  color: white;
+  background-color: skyblue;
+  margin-bottom: 10px;
+}
+
+#goBackButton {
+  padding-bottom: 10px;
+  padding-top: 10px;
+  color: white;
+  background-color: skyblue;
+  margin-bottom: 10px;
+}
+
+#locateShipsButton {
+  padding-bottom: 10px;
+  padding-top: 10px;
+  color: white;
+  background-color: skyblue;
+  margin-bottom: 10px;
+}
+
+#fireSalvosButton {
+  padding-bottom: 10px;
+  padding-top: 10px;
+  color: white;
+  background-color: skyblue;
+  margin-bottom: 10px;
 }

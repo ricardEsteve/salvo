@@ -94,4 +94,14 @@ public class GamePlayer {
         salvos.add(salvo);
     }
 
+    public int theCurrentTurn(){
+        int lastTurn=0;
+
+        for (Salvo salvo: salvos){
+            if(lastTurn < salvo.getTurn()){
+                lastTurn = salvo.getTurn();
+            }
+        }
+        return lastTurn;
+    }
 }

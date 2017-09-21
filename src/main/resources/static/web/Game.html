@@ -10,43 +10,93 @@
 <body>
 
   <h2>Players</h2>
-  
+
   <div class="listOfPlayers">
     <ul id="objectGamePlayers">
-
     </ul>
   </div>
-  
+  <button type="button"  id="goBackButton">Go Back</button> 
+
   <div class="tables">
 
     <div class="tableOne">
       <h1>ship Locations</h1>
-
-
+      <tr>
+      </tr>
 
       <table>
         <tbody id="tbl">
-
-
         </tbody>
       </table>
-    </div>
-
-    <div class="tableTwo">
-
-      <h1>Salvo Locations</h1>
-
-
-
-
+      
       <table>
-        <tbody id="tblsalvo">
+      <tbody id="sizeOfShips">
+        <tr class="ship5">
+          <td class="cell ocupedCell" data-size="5"></td>
+          <td class="cell ocupedCell" data-size="5"></td>
+          <td class="cell ocupedCell" data-size="5"></td>
+          <td class="cell ocupedCell" data-size="5"></td>
+          <td class="cell ocupedCell" data-size="5"></td>
 
+        </tr>
 
-        </tbody>
-      </table>
+        <tr class="ship4">
+
+          <td class="cell ocupedCell" data-size="4"></td>
+          <td class="cell ocupedCell" data-size="4"></td>
+          <td class="cell ocupedCell" data-size="4"></td>
+          <td class="cell ocupedCell" data-size="4"></td>
+
+        </tr>
+
+        <tr class="ship3">
+          <td class="cell ocupedCell" data-size="3"></td>
+          <td class="cell ocupedCell" data-size="3"></td>
+          <td class="cell ocupedCell" data-size="3"></td>
+
+        </tr>
+
+        <tr class="ship2">
+          <td class="cell ocupedCell" data-size="2"></td>
+          <td class="cell ocupedCell" data-size="2"></td>
+        </tr>
+
+        <tr class="ship1">
+          <td class="cell ocupedCell" data-size="1"></td>
+        </tr>
+
+      </tbody>
+    </table>
+     <button type="button"  id="locateShipsButton">Locate  Ships</button> 
+      
     </div>
 
+   
+    <div class="tableTwo">
+      <h1>Salvo Locations</h1>
+      <table>
+        <tbody id="tblSalvo">
+        </tbody>
+      </table>
+      
+     <div>
+    <button type="button"  id="fireSalvosButton">fire salvos</button>
+      
+      
+       
+    </div>
+</div> 
+
+  </div>
+
+  <div class="tblShipsAndCheckBox">
+     <div id="checkBoxText">
+        <h3>switch to vertical:
+          <div>
+            <input id="checkBoxButton" type="checkbox" name="click to swich" value="place your ships vertically">click to place your ships vertically
+          </div>
+        </h3>
+      </div> 
   </div>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
