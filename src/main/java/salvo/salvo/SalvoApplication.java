@@ -166,6 +166,8 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/games").permitAll()
                 .antMatchers("/api/players").permitAll()
                 .antMatchers("/web/background.jpg").permitAll()
+                .antMatchers("/web/flash_bang1600.png").permitAll()
+                .antMatchers("/web/sunk.jpg").permitAll()
                 .anyRequest().fullyAuthenticated();
 
         http.formLogin()

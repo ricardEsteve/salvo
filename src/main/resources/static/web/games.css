@@ -5,144 +5,243 @@ body {
   background-size: cover;
 }
 
+#buttonAndtitle{
+  display: flex;
+  justify-content: space-between;
+  border-radius:  10px;
+  border: 2px solid white;
+}
 
 .theMain {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
+  opacity: 0.8;
+  color: white;
 }
-.buttons {
-  width: 25%;
+
+
+#listAndTable {
+  width: 100%;
+  font: bold 70% sans-serif;
 }
-.listAndTable {
-  width: 70%;
+
+#objectGamePlayers {
+  font: bold 100% sans-serif;
+  width: 100%;
 }
+
 .hidden {
   display: none;
 }
+
 .data {
   display: flex;
   flex-direction: column;
   align-content: center;
 }
+
+.data input{
+
+font: 150% sans-serif;
+}
+.data label{
+  font: 150% sans-serif;
+
+}
+
 #logInButton {
   padding-bottom: 10px;
   padding-top: 10px;
   color: white;
   background-color: skyblue;
   margin-bottom: 10px;
+  width: auto;
+  border-radius:  10px;
+  border: 2px solid white;
+  
 }
+
 #logInButton input {
   display: inline-block;
   width: 100%;
 }
+
 .data {
   display: flex;
   flex-direction: column;
   align-content: center;
 }
+
 #signUpButton {
   padding-bottom: 10px;
   padding-top: 10px;
   color: white;
   background-color: skyblue;
   margin-bottom: 10px;
+  width: auto;
+  border-radius:  10px;
+  border: 2px solid white;
 }
+
 #signUpButton input {
   display: inline-block;
   width: 100%;
 }
+
 #newGameButton {
   padding-bottom: 10px;
   padding-top: 10px;
   color: white;
   background-color: skyblue;
-  margin-bottom: 10px;
+ 
+  width: 20%;
+  height: auto;
+  opacity: 0.8;
+  border-radius:  10px;
+  border: 2px solid white;
 }
+
 .joinInButton {
   padding-bottom: 5px;
   padding-top: 5px;
   color: white;
   background-color: skyblue;
   margin-bottom: 5px;
+  border-radius:  10px;
+  border: 2px solid white;
 }
+
 .playButton {
   padding-bottom: 5px;
   padding-top: 5px;
   color: white;
   background-color: skyblue;
   margin-bottom: 5px;
+  border-radius:  10px;
+  border: 2px solid white;
 }
+
 .viewButton {
   padding-bottom: 5px;
   padding-top: 5px;
   color: white;
   background-color: skyblue;
   margin-bottom: 5px;
+  border-radius:  10px;
+  border: 2px solid white;
 }
+
 #logOutButton {
   padding-bottom: 10px;
   padding-top: 10px;
   color: white;
   background-color: skyblue;
-  margin-bottom: 10px;
+  
+  width: 20%;
+  height: auto;
+  opacity: 0.8;
+  border-radius:  10px;
+  border: 2px solid white;
 }
+
 h1 {
+  opacity: 0.8;
   color: white;
   display: flex;
-  justify-content: center;
-
+  text-align: center;
 }
+#titolPrincipal{
+  
+}
+
+
+button {
+  width: 10%;
+  border-radius:  10px;
+  border: 2px solid white;
+}
+
 #list {
   color: white;
+  font: bold 150% sans-serif;
 }
+
+li {
+  display: flex;
+  justify-content: space-between;
+  font: bold 150% sans-serif;
+  opacity: 0.8;
+}
+
 #tbl {
-  border: skyblue 1px solid;
+  border: skyblue 2px solid;
+  width: 100%;
+  font: bold 150% sans-serif;
+  border-radius:  10px;
+  border: 2px solid white;
 }
+
+
 #leaderBoard {
-  background-color: white;
-  color: skyblue;
+  opacity: 0.8;
+  color: white;
 }
+
 th {
-  background-color: white;
-  color: skyblue;
-  padding-left: 10px;
-  padding-bottom: 10px;
-  padding-right: 10px;
-  padding-top: 10px;
+  opacity: 0.8;
+  color: white;
+  padding-left: 20px;
+  padding-bottom: 20px;
+  padding-right: 20px;
+  padding-top: 20px;
+  margin-top: 20px;
+  font: bold 150% sans-serif;
+}
+
+td {
+  opacity: 0.8;
+  color: white;
   margin-top: 10px;
+  font: bold 150% sans-serif;
+  text-align: center;
 }
+
 .emailCell {
-  padding-left: 5px;
-  padding-bottom: 2px;
-  padding-right: 5px;
-  padding-top: 2px;
-  margin-top: 2px;
+  padding-left: 10px;
+  padding-bottom: 5px;
+  padding-right: 10px;
+  padding-top: 5px;
+  margin-top: 5px;
 }
+
 .totalCell {
-  padding-left: 5px;
-  padding-bottom: 2px;
-  padding-right: 5px;
-  padding-top: 2px;
-  margin-top: 2px;
+  padding-left: 10px;
+  padding-bottom: 5px;
+  padding-right: 10px;
+  padding-top: 5px;
+  margin-top: 5px;
 }
+
 .wonCell {
-  padding-left: 5px;
-  padding-bottom: 2px;
-  padding-right: 5px;
-  padding-top: 2px;
-  margin-top: 2px;
+  padding-left: 10px;
+  padding-bottom: 5px;
+  padding-right: 10px;
+  padding-top: 5px;
+  margin-top: 5px;
 }
+
 .lostCell {
-  padding-left: 5px;
-  padding-bottom: 2px;
-  padding-right: 5px;
-  padding-top: 2px;
-  margin-top: 2px;
+  padding-left: 10px;
+  padding-bottom: 5px;
+  padding-right: 10px;
+  padding-top: 5px;
+  margin-top: 5px;
 }
+
 .tiedCell {
-  padding-left: 5px;
-  padding-bottom: 2px;
-  padding-right: 5px;
-  padding-top: 2px;
-  margin-top: 2px;
+  padding-left: 10px;
+  padding-bottom: 5px;
+  padding-right: 10px;
+  padding-top: 5px;
+  margin-top: 5px;
 }

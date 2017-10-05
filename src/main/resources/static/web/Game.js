@@ -16,20 +16,23 @@ $(function () {
   $.getJSON("/api/game_view/" + id, function (json) {
     console.log(json);
 
-    createGrid(10);
+    createGrid(10, "tbl", "data-location");
 
     putShips(json.ships);
 
     showPlayer(json.gamePlayers);
 
-    createSalvoGrid(10);
+    createGrid(10, "tblSalvo", "data-locationOponent");
 
-    putSalvoes(json.salvoes);
+    putSalvoes(json.salvoes, json.mySalvoes);
+
+    putHits(json.mySalvoes);
+
+    statusOfShips(json);
 
     if (json.ships.length > 0) {
       $("#sizeOfShips").hide();
     }
-
 
 
 
@@ -75,8 +78,8 @@ function showPlayer(objectGamePlayers) {
 }
 
 
-function createGrid(cellNumber) {
-  var tbody = document.getElementById("tbl");
+function createGrid(cellNumber, id, attr) {
+  var tbody = document.getElementById(id);
   var letters = [" ", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
   var numbers = [" ", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
 
@@ -95,7 +98,7 @@ function createGrid(cellNumber) {
       }
 
       cell.className = "cell";
-      cell.setAttribute("data-location", letters[i] + numbers[j]);
+      cell.setAttribute(attr, letters[i] + numbers[j]);
       row.appendChild(cell);
     }
     tbody.appendChild(row);
@@ -113,61 +116,46 @@ function putShips(objectShips) {
   }
 }
 
-function createSalvoGrid(cellNumber) {
-  var tbody = document.getElementById("tblSalvo");
-  var letters = ["", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
-  var numbers = ["", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
+function putHits(hits) {
+  console.log(hits);
+  for (var i = 0; i < hits.length; i++) {
 
-  for (var i = 0; i < cellNumber + 1; i++) {
-    var row = document.createElement("tr");
-
-    for (var j = 0; j < cellNumber + 1; j++) {
-
-      var cell = document.createElement("td");
-
-      if (i == 0) {
-        cell.innerHTML = numbers[j];
-      }
-
-      if (j == 0) {
-        cell.innerHTML = letters[i];
-      }
-      cell.className = "cell";
-
-      cell.setAttribute("data-locationOponent", letters[i] + numbers[j]);
-
-      row.appendChild(cell);
-    }
-    tbody.appendChild(row);
+    var hitLocations = hits[i].hits;
+    hitLocations.forEach(function (hit) {
+      var firedCellenemy = $('[data-locationOponent="' + hit + '"]');
+      firedCellenemy.addClass("crashCell");
+    });
   }
 }
 
-function putSalvoes(objectSalvoes) {
+function putSalvoes(objectSalvoes, mySalvoes) {
 
-  objectSalvoes.forEach(function (salvo) {
+  objectSalvoes.forEach(function (salvoGroup) {
 
-    salvo.forEach(function (turn) {
+    salvoGroup.forEach(function (salvo) {
 
-      turn.locations.forEach(function (location) {
-        if (turn.player == getURLParameterByName("gp")) {
-          var firedCell = $('[data-location="' + location + '"]');
+      salvo.locations.forEach(function (location) {
+        if (salvo.gamePlayerId == getURLParameterByName("gp")) {
 
-          if (firedCell.hasClass("ocupedCell")) {
-            firedCell.addClass("firedCell crashCell");
-
-          } else if (!firedCell.hasClass("ocupedCell")) {
-            firedCell.addClass("firedCell");
-          }
+          var firedCellenemy = $('[data-locationOponent="' + location + '"]');
 
 
-          firedCell.html("<p class='shot'>" + turn.turn + "</p>");
+
+
+
+          firedCellenemy.addClass("firedCell");
+          firedCellenemy.html("<p class='shot'>" + salvo.turn + "</p>");
 
         } else {
 
-          var firedCellenemy = $('[data-locationOponent="' + location + '"]');
-          console.log("Yes");
-          firedCellenemy.addClass("firedCell");
-          firedCellenemy.html("<p class='shot'>" + turn.turn + "</p>");
+          var firedCell = $('[data-location="' + location + '"]');
+
+          if (firedCell.hasClass("ocupedCell")) {
+            firedCell.addClass("crashCell");
+          }
+          firedCell.addClass("firedCell");
+          firedCell.html("<p class='shot'>" + salvo.turn + "</p>");
+
         }
       });
 
@@ -186,7 +174,7 @@ function putSalvoes(objectSalvoes) {
     var letter = locationGrid.substr(0, 1);
     var number = Number(locationGrid.substr(1));
     var cellId = $(this).attr("data-locationoponent");
-    
+
     if (letter == "") {
       alert("cannot place anything there!");
       return;
@@ -202,10 +190,10 @@ function putSalvoes(objectSalvoes) {
       alert("You need to shoot salvoes or reload");
       return;
     }
-    
+
     if (salvos.indexOf(cellId) != -1) {
       var index = salvos.indexOf(cellId);
-      
+
       salvos.splice(index, 1);
       $(this).toggleClass("firedCell");
     } else {
@@ -213,7 +201,7 @@ function putSalvoes(objectSalvoes) {
       $(this).toggleClass("firedCell");
     }
 
-    
+
   });
 
   $("td[data-size]").click(function () {
@@ -394,15 +382,43 @@ function putSalvoes(objectSalvoes) {
         data: JSON.stringify({
           "cells": salvos
         }),
-
-
       })
       .done(function () {
-
         location.reload();
       });
   }
 }
+
+
+function statusOfShips(json) {
+
+  for (var j = 0; j < json.ships.length; j++) {
+//    $("#statusOponentShips").append("<li class=listOfShips>" + json.ships[j].type + "</li>");
+  }
+
+  for (var i = 0; i < json.hitAndSunk.length; i++) {
+    if (json.hitAndSunk[i].isSunk == true) {
+      alert(json.hitAndSunk[i].typeShip);
+
+      $("#statusOponentShips").append("<li class='listOfShips sunkBoat'>" + json.hitAndSunk[i].typeShip + "</li>");
+    }else{
+       $("#statusOponentShips").append("<li class='listOfShips'>" + json.hitAndSunk[i].typeShip + "</li>");
+    }
+
+//    for(var l=0; l<json.mySunk.length; l++){
+//      if(json.mySunk[l].isSunk == true){
+//         alert(json.mySunk[l].typeShip);
+//        $("#statusOfShips").append("<li class='listOfShips sunkBoat'>" + json.mySunk[l].typeShip + "</li>");
+//    }else{
+//      $("#statusOfShips").append("<li class='listOfShips'>" + json.mySunk[l].typeShip + "</li>");
+//      
+//    }
+//      }
+    }
+
+  }
+
+
 
 $("#goBackButton").click(goBack);
 

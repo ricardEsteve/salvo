@@ -8,10 +8,18 @@
 </head>
 
 <body>
+ <div id="buttonAndtitle">
+  <button type="button" class="hidden" id="newGameButton">New Game</button>
+ <div id="titolPrincipal">
   <h1>BattleShip Commanders</h1>
+  
+  </div>
+  <button type="button" class="hidden" id="logOutButton">Log Out</button>
+  </div>
+  
+  <br>
+  
   <div class="theMain">
-
-    <div class="buttons">
 
       <div class="signIn hidden">
 
@@ -22,12 +30,8 @@
           <input type="text" id="password">
           <button type="button" id="logInButton">Log In</button>
         </div>
-
-
       </div>
-      <button type="button" class="hidden" id="logOutButton">Log Out</button>
-
-
+      
       <div class="signUp hidden">
 
         <div class="data">
@@ -41,15 +45,13 @@
         </div>
       </div>
 
-      <button type="button" class="hidden" id="newGameButton">New Game</button>
-
-
     </div>
     
  
-    <div class="listAndTable">
+    <div id="listAndTable">
+     
       <ol id="list"></ol>
-
+      
       <table id="tbl">
         <thead>
           <tr>
@@ -63,9 +65,8 @@
         <tbody id="leaderBoard">
         </tbody>
       </table>
-    </div>
-
-  </div>
+</div>
+  
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script type="text/javascript" src="games.js"></script>
 

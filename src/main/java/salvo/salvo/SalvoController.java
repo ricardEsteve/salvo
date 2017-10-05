@@ -1,6 +1,7 @@
 package salvo.salvo;
 
 
+import javafx.scene.control.Cell;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -125,6 +126,17 @@ public class SalvoController {
 
     }
 
+    private GamePlayer getOponent (GamePlayer gamePlayer){
+
+
+        Long gamePlayerId = gamePlayer.getId();
+        Set<GamePlayer> gamePlayers= gamePlayer.getGame().getGamePlayers();
+
+        GamePlayer Oponent = gamePlayers.stream().filter(gp -> gp.getId()!= gamePlayerId).findAny().orElse(null);
+        return Oponent;
+
+    }
+
 
     @RequestMapping(value = "/game_view/{gamePlayerId}")
     public ResponseEntity<Object> gamePlayerId(@PathVariable long gamePlayerId, Authentication authentication) {
@@ -139,6 +151,8 @@ public class SalvoController {
             return new ResponseEntity<Object>("the gameplayer does not exists", HttpStatus.FORBIDDEN);
         }
 
+        List <String> enemySalvos = listOfSalvoes(getOponent(gamePlayer));
+        List <String> mySalvos = listOfSalvoes(gamePlayer);
 
         map.put("id", theGame.getId());
         map.put("created", theGame.getCreationDate());
@@ -148,14 +162,20 @@ public class SalvoController {
         Set<Ship> setOfShips = gamePlayer.getShips();
         map.put("ships", setOfShips.stream().map(ship -> mapOfShip(ship)).collect(Collectors.toList()));
 
-
         Set<GamePlayer> bothGamePlayers = theGame.getGamePlayers();
 
         map.put("salvoes", bothGamePlayers.stream().map(gamePlayer1 -> mapOfSalvo(gamePlayer1)).collect(Collectors.toList()));
+        map.put("mySalvoes", gamePlayer.getSalvo().stream().map(salvo -> getMySalvoInfo(salvo)).collect(Collectors.toList()));
+        map.put("hitAndSunk",gamePlayer.getShips().stream().map(ship -> hitAndSunk(enemySalvos, ship)).collect(Collectors.toList()));
+        map.put("mySunk",getOponent(gamePlayer).getShips().stream().map(ship -> hitAndSunk(mySalvos, ship)).collect(Collectors.toList()));
+
         return new ResponseEntity<Object>(map, HttpStatus.CREATED);
     }
 
     public Map<String, Object> eachGamePlayerMap(GamePlayer gamePlayer) {
+
+
+
         Map<String, Object> map = new LinkedHashMap<>();
         map.put("id", gamePlayer.getId());
         map.put("email", gamePlayer.getPlayer().getEmail());
@@ -163,6 +183,61 @@ public class SalvoController {
         return map;
 
     }
+
+    public List <String> getShiplocation (GamePlayer gamePlayer){
+        if (gamePlayer == null){
+            return new ArrayList<>();
+        }
+
+        List <String> shipLocation = gamePlayer.getShips().stream().map(ship -> ship.getCells())
+                .flatMap(cells -> cells.stream())
+                .collect(Collectors.toList());
+        return shipLocation;
+    }
+
+    public Map<String, Object> getMySalvoInfo (Salvo salvo){
+        Map <String, Object> map= new LinkedHashMap<>();
+        map.put("location",salvo.getCells() );
+        map.put("turn", salvo.getTurn());
+        map.put("hits", getHits(salvo));
+
+        return  map;
+    }
+
+    public List <String> getHits (Salvo salvo){
+        List<String> locationSalvo = salvo.getCells();
+        List<String> locationOponentShip = getShiplocation(getOponent(salvo.getGamePlayer()));
+        List<String> hits = locationSalvo.stream().filter(cell->locationOponentShip.contains(cell)).collect(Collectors.toList());
+
+        return hits;
+    }
+
+    private Map<String, Object> hitAndSunk(List<String> enemySalvoes, Ship ship) {
+
+
+
+        Map<String, Object> shipInfoSunkTypeMap = new LinkedHashMap<>();
+        boolean shipIsSunk = ship.getCells().stream()
+                .allMatch(locations -> enemySalvoes.contains(locations));
+
+        shipInfoSunkTypeMap.put("typeShip", ship.getType());
+        shipInfoSunkTypeMap.put("isSunk",shipIsSunk );
+
+        return shipInfoSunkTypeMap;
+    }
+
+    public List<String> listOfSalvoes(GamePlayer gamePlayer) {
+
+        if (gamePlayer == null){
+            return new ArrayList<String>();
+        }
+
+        return gamePlayer.getSalvo().stream()
+                .map(salvo -> salvo.getCells())
+                .flatMap(cells -> cells.stream()).collect(Collectors.toList());
+    }
+
+
 
     public Map<String, Object> mapOfShip(Ship ship) {
         Map<String, Object> map = new LinkedHashMap<>();
@@ -181,7 +256,7 @@ public class SalvoController {
         for (Salvo salvo : setOfSalvoes) {
             Map<String, Object> map = new LinkedHashMap<>();
             map.put("turn", salvo.getTurn());
-            map.put("player", gamePlayer.getPlayer().getId());
+            map.put("gamePlayerId", gamePlayer.getId());
             map.put("locations", salvo.getCells());
             list.add(map);
         }
@@ -259,6 +334,27 @@ public class SalvoController {
             return new ResponseEntity<Object>("the user already has ships placed", HttpStatus.FORBIDDEN);
         }
         for (Ship ship : setOfShips) {
+
+            if(ship.getCells().size() == 5){
+                ship.setType(ShipType.carrier);
+            }
+
+            if(ship.getCells().size() == 4){
+                ship.setType(ShipType.battleship);
+            }
+
+            if(ship.getCells().size() == 3){
+                ship.setType(ShipType.submarine);
+            }
+
+            if(ship.getCells().size() == 2){
+                ship.setType(ShipType.destroyer);
+            }
+
+            if(ship.getCells().size() == 1){
+                ship.setType(ShipType.patrolBoat);
+            }
+
             ship.setGamePlayer(foundGamePlayer);
             shipRepository.save(ship);
         }
@@ -286,7 +382,6 @@ public class SalvoController {
             return new ResponseEntity<Object>("the current user is not the game player the ID references", HttpStatus.UNAUTHORIZED);
         }
 
-
         int theCurrentTurn = foundGamePlayer.theCurrentTurn();
         salvo.setGamePlayer(foundGamePlayer);
         salvo.setTurn(theCurrentTurn + 1);
@@ -296,17 +391,11 @@ public class SalvoController {
     }
 
 
+
     public boolean isEmailTaken (String email){
 
         Player playerFound = playerRepository.findByEmail(email);
-
-        if(playerFound != null ){
-            return true;
-        } else {
-            return false;
-        }
-
-
+        return playerFound != null;
     }
 
     public boolean exists (Player newPlayer){
